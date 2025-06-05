@@ -27,22 +27,22 @@ button:
     on_press:
       then:
         - lambda: |-
-            ((cc1101fan::CC1101Fan*)(&id(mech_fan)))->send_other_command(0);
+            ((cc1101fan::CC1101Fan*)(id(mech_fan)))->send_other_command(0);
   - platform: template
     name: "Run Timer for 10 Minutes"
     on_press:
       then:
         - lambda: |-
-            ((cc1101fan::CC1101Fan*)(&id(mech_fan)))->send_other_command(1);
+            ((cc1101fan::CC1101Fan*)(id(mech_fan)))->send_other_command(1);
   - platform: template
     name: "Run Timer for 20 Minutes"
     on_press:
       then:
         - lambda: |-
-            ((cc1101fan::CC1101Fan*)(&id(mech_fan)))->send_other_command(2);
+            ((cc1101fan::CC1101Fan*)(id(mech_fan)))->send_other_command(2);
   - platform: template
     name: "Run Timer for 30 Minutes"
     on_press:
       then:
         - lambda: |-
-            ((cc1101fan::CC1101Fan*)(&id(mech_fan)))->send_other_command(3);
+            ((cc1101fan::CC1101Fan*)(id(mech_fan)))->send_other_command(3);
