@@ -1,17 +1,25 @@
 esphome:
-  name: fancontrol
-  platform: ESP8266
-  board: d1_mini_lite
+  name: mechanische-ventilatie
+  friendly_name: mechanische_ventilatie
   libraries:
     - SPI
     - Ticker
 
+esp8266:
+  board: nodemcuv2
+  framework:
+    version: recommended
+
 external_components:
-  - source: 
+  - source:
       type: git
-      url: https://github.com/CoMPaTech/esphome_ct
-      ref: dev2
-    # refresh: 3600s # only set this briefly otherwise it just refreshes daily, see https://esphome.io/components/external_components#external-components-refresh for setting refresh too low
+      url: https://github.com/CrazyChaos/esphome_ct
+      ref: main
+#    refresh: 3600s # only set this briefly otherwise it just refreshes daily, see https://esphome.io/components/external_components#external-components-refresh for setting refresh too low
+
+# Enable logging
+logger:
+  level: DEBUG # Change this to VERBOSE to find out the ID of your remote.
 
 fan:
   - platform: "cc1101"
@@ -46,3 +54,21 @@ button:
       then:
         - lambda: |-
             ((cc1101fan::CC1101Fan*)(id(mech_fan)))->send_other_command(3);
+  - platform: template
+    name: "Set speed low"
+    on_press:
+      then:
+        - lambda: |-
+            ((cc1101fan::CC1101Fan*)(id(mech_fan)))->set_fan_speed(1);
+  - platform: template
+    name: "Set speed medium"
+    on_press:
+      then:
+        - lambda: |-
+            ((cc1101fan::CC1101Fan*)(id(mech_fan)))->set_fan_speed(2);
+  - platform: template
+    name: "Set speed high"
+    on_press:
+      then:
+        - lambda: |-
+            ((cc1101fan::CC1101Fan*)(id(mech_fan)))->set_fan_speed(3);
